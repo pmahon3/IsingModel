@@ -7,7 +7,11 @@ clear all;
 % Simulation Parameters
 nRows = 30;
 nCols = 30;
+<<<<<<< HEAD
 nSims = 4;
+=======
+nSims = 50;
+>>>>>>> 8e9e0c23450ebf211d609e61159b38641719324f
 nChains = 3;
 nThin = 10;
 nBurnin = 2000;
@@ -32,6 +36,7 @@ end
 
 % Average energy per spin
 plot(Ts, EResults./-(nRows*nCols), 'kx');
+<<<<<<< HEAD
 hold on; 
 
 % Compute the exact free energy per spin 
@@ -54,6 +59,12 @@ xlabel("T");
 ylabel("<E>/N");
 title("System Energy per Spin");
 legend("Simulation", "Exact Solution");
+=======
+xlabel("T");
+ylabel("<E>/N");
+title("System Energy per Spin");
+legend("Simulation");
+>>>>>>> 8e9e0c23450ebf211d609e61159b38641719324f
 
 % Average magnitization per spin
 figure;
