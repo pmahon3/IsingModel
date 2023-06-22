@@ -50,7 +50,11 @@ int main() {
     printf("Simulating temperature %f ...\n", currenttemp);
 
     // Randomize initial configuration of lattice
-    randomizeLattice( (int *) arrPtr, nrows, ncols, 1);
+    randomizeLattice( (int *) arrPtr, nrows, ncols, 0);
+
+    // Print initial lattice
+    printf( "Initial lattice...\n\n");
+    printLattice( (int *) arrPtr, nrows, ncols);
 
     Mag = totalMagnetization( (int *) arrPtr, nrows, ncols );
     Ham = totalHamiltonian( (int *) arrPtr, nrows, ncols, J );
@@ -60,23 +64,24 @@ int main() {
 
     // Compute nburnin MCMC steps
     for( int burn = 0 ; burn < nburnin ; burn++ ){
+
+
       // Explore nrows-by-ncols dimensional space
-		for ( int dim = 0 ; dim < nrows * ncols ; dim++ ){
+      for ( int dim = 0 ; dim < nrows * ncols ; dim++ ){
 
-			// Randomly select one dimension and calculate change in Hamiltonian if state flipped
-			i = floor(genrand() * (double) nrows);
-			j = floor(genrand() * (double) ncols);
-			dE = dESpin( (int *) arrPtr, i, j, nrows, ncols, J );
+	// Randomly select one dimension and calculate change in Hamiltonian if state flipped
+	i = floor(genrand() * (double) nrows);
+	j = floor(genrand() * (double) ncols);
+	dE = dESpin( (int *) arrPtr, i, j, nrows, ncols, J );
 
-			// Compute transition probability and update state
-			prob = transitionProbability(dE, currenttemp);
-			if ( prob > genrand() ){
-			  flipSpin( (int *) arrPtr, i, j, nrows, ncols);
-			  Mag = Mag + 2 * *((int *) arrPtr + i * ncols + j);
-			  Ham = Ham + dE;	
-			}
-		}
-    }
+	// Compute transition probability and update state
+	prob = transitionProbability(dE, currenttemp);
+	if ( prob > genrand() ){
+	  flipSpin( (int *) arrPtr, i, j, nrows, ncols);
+	  Mag = Mag + 2 * *((int *) arrPtr + i * ncols + j);
+	  Ham = Ham + dE;	
+	}
+      }
 
       // Accept every nthin-th MCMC step
       if ( modulo( burn, nthin) == 0) fprintf(burnfile, "%d,%d,%d,\n", burn/nthin, Mag, Ham);
@@ -102,27 +107,27 @@ int main() {
     for ( int step = 0 ; step < niters ; step++ ){
 
       // Explore nrows-by-ncols dimensional space
-		for( int dim = 0 ; dim < nrows * ncols ; dim++ ){
-			// Randomly select one dimension and calculate change in Hamiltonian if state flipped
-			i = floor(genrand() * (double) nrows);
-			j = floor(genrand() * (double) ncols);
-			dE = dESpin( (int *) arrPtr, i, j, nrows, ncols, J);
+      for( int dim = 0 ; dim < nrows * ncols ; dim++ ){
+	// Randomly select one dimension and calculate change in Hamiltonian if state flipped
+	i = floor(genrand() * (double) nrows);
+	j = floor(genrand() * (double) ncols);
+	dE = dESpin( (int *) arrPtr, i, j, nrows, ncols, J);
 
-			// Compute transition probability and update state
-			prob = transitionProbability(dE, currenttemp);
-			if ( prob > genrand() ){
-			  flipSpin( (int *) arrPtr, i, j, nrows, ncols);
-			  Mag = Mag + 2 * *((int *) arrPtr + i * ncols + j);
-			  Ham = Ham + dE ;
-			}
-		}
+	// Compute transition probability and update state
+	prob = transitionProbability(dE, currenttemp);
+	if ( prob > genrand() ){
+	  flipSpin( (int *) arrPtr, i, j, nrows, ncols);
+	  Mag = Mag + 2 * *((int *) arrPtr + i * ncols + j);
+	  Ham = Ham + dE ;
+	}
+      }
 
-		// Accept nthin-th accept MCMC step
-		if( modulo(step, nthin) == 0 ){
-			fprintf(samplefile, "%d,%d,%d,\n", step/nthin, Mag, Ham);
-			hamsum += Ham;
-			magsum += abs(Mag);
-		}
+      // Accept nthin-th accept MCMC step
+      if( modulo(step, nthin) == 0 ){
+	fprintf(samplefile, "%d,%d,%d,\n", step/nthin, Mag, Ham);
+	hamsum += Ham;
+	magsum += abs(Mag);
+      }
     }
 
     // Compute summary statistics
