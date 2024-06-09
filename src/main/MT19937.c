@@ -56,7 +56,7 @@ static int mti=N+1; /* mti==N+1 means mt[N] is not initialized */
 /* initializing the array with a NONZERO seed */
 void
 sgenrand(seed)
-    unsigned long seed;	
+    unsigned long seed;
 {
     /* setting initial seeds to mt[N] using         */
     /* the generator Line 25 of Table 1 in          */
@@ -110,8 +110,8 @@ genrand()
  *{ 
  *   int j;
 
- *   sgenrand(4357); /* any nonzero integer can be used as a seed */
-/*   for (j=0; j<1000; j++) {
+ *   sgenrand(4357); // any nonzero integer can be used as a seed //
+ *   for (j=0; j<1000; j++) {
  *       printf("%10.8f ", genrand());
  *      if (j%8==7) printf("\n");
  *   }

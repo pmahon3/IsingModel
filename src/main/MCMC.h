@@ -38,14 +38,14 @@ typedef unsigned long seed;
 
 
 /* MCMC functions */
-void randomizeLattice(arrPtr p, int n, int m, int nonrandom);
-int totalHamiltonian(arrPtr p, int n, int m, int J);
-int totalMagnetization(arrPtr p, int n, int m);
-double transitionProbability(int dE, double t);
-void flipSpin(arrPtr p, int i, int j, int n, int m);
-int dESpin(arrPtr p, int i, int j, int n, int m, int J);
+void randomize_lattice(arrPtr p, int n, int m, int nonrandom);
+int total_hamiltonian(arrPtr p, int n, int m, int J);
+int total_magnetization(arrPtr p, int n, int m);
+double transition_probability(int dE, double t);
+void flip_spin(arrPtr p, int i, int j, int n, int m);
+int dE_spin(arrPtr p, int i, int j, int n, int m, int J);
 int modulo( int a, int n);
-void printLattice(arrPtr p, int n, int m);
+void print_lattice(arrPtr p, int n, int m);
 
 /* Mersenne twister functions */ 
 void sgenrand(seed s);
