@@ -1,0 +1,556 @@
+
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+\begin{document}
+
+\title{Hamiltonian for the Ising Model with Fixed Sum of Spins}
+\author{}
+\date{}
+\maketitle
+\tableofcontents
+
+\section{Introduction}
+This document derives the Hamiltonian for an Ising model where the spins \( s_i \) are constrained to sum to 1, and each spin takes values in the interval \([0,1]\). Two Hamiltonian's are considered, \(H_+\) and \(H_-\). \(H_+\) is minimized where the product of spins is maximized and maximized when said product is minimized. \(H_-\) is the converse, minimized where the product is minimized and maximized where the product is maximized
+
+\section{Definitions}
+Given a set of spins \( \{s_1, s_2, \ldots, s_N\} \), the arithmetic mean (AM) and geometric mean (GM) are given by:
+\[
+\text{AM} = \frac{1}{N} \sum_{i=1}^N s_i
+\]
+\[
+\text{GM} = \left( \prod_{i=1}^N s_i \right)^{\frac{1}{N}}
+\]
+
+\section{Hamiltonian as the Ratios of AM and GM}
+\subsection{GM:AM Ratio is \(H_+\)}
+We define the Hamiltonian \( H_+ \) as the ratio of the geometric mean to the arithmetic mean. This ratio is:
+\[
+\frac{\text{GM}}{\text{AM}} = \frac{\left( \prod_{i=1}^N s_i \right)^{\frac{1}{N}}}{\frac{1}{N} \sum_{i=1}^N s_i} = \left( \prod_{i=1}^N s_i \right)^{\frac{1}{N}} \cdot \frac{N}{\sum_{i=1}^N s_i}
+\]
+Taking the natural logarithm of this ratio, we get:
+\[
+\ln\left( \frac{\text{GM}}{\text{AM}} \right) = \ln\left( \left( \prod_{i=1}^N s_i \right)^{\frac{1}{N}} \cdot \frac{N}{\sum_{i=1}^N s_i} \right)
+\]
+This simplifies to:
+\[
+\ln\left( \frac{\text{GM}}{\text{AM}} \right) = \frac{1}{N} \sum_{i=1}^N \ln(s_i) + \ln(N) - \ln\left( \sum_{i=1}^N s_i \right)
+\]
+Multiplying both sides by \( N \) to form the Hamiltonian \( H_+ \):
+\[
+H_+ = N \ln\left( \frac{\text{GM}}{\text{AM}} \right) = \sum_{i=1}^N \ln(s_i) + N \ln(N) - N \ln\left( \sum_{i=1}^N s_i \right)
+\]
+Applying the constraint that the sum of the spins equals 1:
+\[
+\sum_{i=1}^N s_i = 1
+\]
+we get:
+\[
+H_+ = \sum_{i=1}^N \ln(s_i) + N \ln(N) - N \ln(1) = \sum_{i=1}^N \ln(s_i) + N \ln(N)
+\]
+
+\subsection{AM:GM Ratio is \(H_-\)}
+We define the Hamiltonian \( H_- \) as the ratio of the arithmetic mean to the geometric mean. This ratio is:
+\[
+\frac{\text{AM}}{\text{GM}} = \frac{\frac{1}{N} \sum_{i=1}^N s_i}{\left( \prod_{i=1}^N s_i \right)^{\frac{1}{N}}} = \frac{1}{N} \sum_{i=1}^N s_i \cdot \left( \prod_{i=1}^N s_i \right)^{-\frac{1}{N}}
+\]
+Taking the natural logarithm of this ratio, we get:
+\[
+\ln\left( \frac{\text{AM}}{\text{GM}} \right) = \ln\left( \frac{1}{N} \sum_{i=1}^N s_i \right) - \ln\left( \left( \prod_{i=1}^N s_i \right)^{\frac{1}{N}} \right)
+\]
+This simplifies to:
+\[
+\ln\left( \frac{\text{AM}}{\text{GM}} \right) = \ln\left( \frac{1}{N} \sum_{i=1}^N s_i \right) - \frac{1}{N} \sum_{i=1}^N \ln(s_i)
+\]
+Multiplying both sides by \( N \) to form the Hamiltonian \( H_- \):
+\[
+H_- = N \ln\left( \frac{\text{AM}}{\text{GM}} \right) = N \ln\left( \frac{1}{N} \sum_{i=1}^N s_i \right) - \sum_{i=1}^N \ln(s_i)
+\]
+Applying the constraint that the sum of the spins equals 1:
+\[
+\sum_{i=1}^N s_i = 1
+\]
+Substituting this into the Hamiltonian, we get:
+\[
+H_- = N \ln\left( \frac{1}{N} \right) - \sum_{i=1}^N \ln(s_i) = -N \ln(N) - \sum_{i=1}^N \ln(s_i)
+\]
+and have,
+\[- H_+ = H_-\]
+
+\subsection{Minimization of \( H_+\) and \(H_- \)}
+To see when \( H_- \) is minimized, consider the case where one spin is 1 and the rest are 0:
+\[
+s_1 = 1 \quad \text{and} \quad s_i = 0 \quad \text{for} \quad i \neq 1
+\]
+Substituting these values into \( H_- \):
+\[
+H_- = -N \ln(N) - \left( \ln(1) + \sum_{i=2}^N \ln(0) \right)
+\]
+Since \(\ln(1) = 0\) and \(\ln(0) \to -\infty\):
+\[
+H_- \to -N \ln(N) + (N-1)(-\infty) \to -\infty
+\]
+This indicates that \( H_- \) tends to \(-\infty\) as the product of the spins is minimized (i.e., when one spin is 1 and the rest are 0).
+
+For \( H_+ \), when all spins are equal, \( s_i = s \) for all \( i \), and \( \sum_{i=1}^N s_i = 1 \) implies \( s = \frac{1}{N} \):
+\[
+H_+ = \sum_{i=1}^N \ln\left(\frac{1}{N} \cdot N\right) - N \ln(N) = - N \ln(N)
+\]
+and so \( H_+ \) is minimized where \(\sigma_i = \sigma_j\) for all spins \(i,j\).
+
+\section{Combined Hamiltonian \(H_\delta\)}
+We can construct a combined Hamiltonian \( H_\delta \) as an interpolation of \( H_+ \) and \( H_- \):
+\[
+H_\delta = (1 - \delta) H_+ + \delta H_-
+\]
+Substituting the expressions for \( H_+ \) and \( H_- \):
+\[
+H_\delta = (1 - \delta) \left( \sum_{i=1}^N \ln(s_i) + N \ln(N) \right) + \delta \left( -N \ln(N) - \sum_{i=1}^N \ln(s_i) \right)
+\]
+Simplifying, we get:
+\[
+H_\delta = (1 - 2\delta) \left( \sum_{i=1}^N \ln(s_i) + N \ln(N) \right)
+\]
+Here \( H_\delta = H_+ \) for \(\delta = 0\) and \(H_\delta = H_- \) for \(\delta = 1\).
+
+\section{Lorenz Curve and Gini Coefficient}
+The Lorenz curve \( L(x, \delta) \) for the combined Hamiltonian is given by:
+\[
+L(x, \delta) = (1 - \delta) x + \delta \cdot
+\begin{cases} 
+0 & \text{if } 0 \leq x < 1 \\
+1 & \text{if } x = 1
+\end{cases}
+\]
+The Gini coefficient \( G(\delta) \) is calculated as:
+\[
+G(\delta) = 1 - 2 \int_0^1 L(x, \delta) \, dx
+\]
+Integrating the Lorenz curve:
+\[
+\int_0^1 L(x, \delta) \, dx = \int_0^1 \left( (1 - \delta) x + \delta \cdot
+\begin{cases} 
+0 & \text{if } 0 \leq x < 1 \\
+1 & \text{if } x = 1
+\end{cases}
+\right) dx
+\]
+Since \( \delta \cdot 0 \) is zero for \( 0 \leq x < 1 \):
+\[
+\int_0^1 L(x, \delta) \, dx = \int_0^1 (1 - \delta) x \, dx + \delta \int_0^1
+\begin{cases} 
+0 & \text{if } 0 \leq x < 1 \\
+1 & \text{if } x = 1
+\end{cases}
+\, dx
+\]
+For the first part:
+\[
+\int_0^1 (1 - \delta) x \, dx = (1 - \delta) \left[ \frac{x^2}{2} \right]_0^1 = (1 - \delta) \cdot \frac{1}{2}
+\]
+For the second part:
+\[
+\delta \int_0^1
+\begin{cases} 
+0 & \text{if } 0 \leq x < 1 \\
+1 & \text{if } x = 1
+\end{cases}
+\, dx = \delta \cdot 0 + \delta \cdot \int_{0}^{0} dx = 0
+\]
+So:
+\[
+\int_0^1 L(x, \delta) \, dx = (1 - \delta) \cdot \frac{1}{2}
+\]
+The Gini coefficient is:
+\[
+G(\delta) = 1 - 2 \left( (1 - \delta) \cdot \frac{1}{2} \right) = 1 - (1 - \delta) = \delta
+\]
+providing the rather intuitive result that,
+\[G(\delta) = \delta\]
+
+\section{Alternative Formulation of the Combined Hamiltonian}
+
+In this section, we introduce a new formulation of the Hamiltonian \( H_\delta \) which interpolates between the ratio of the arithmetic mean (AM) to the geometric mean (GM) and its inverse, depending on a parameter \(\delta\). The Hamiltonian is defined as:
+\[
+H_\delta = \left( \frac{\text{AM}}{\text{GM}} \right)^\delta
+\]
+where \(\delta \in [-1, 1]\).
+
+
+\subsection{Hamiltonian Formulation}
+
+The Hamiltonian \( H \) is formulated as:
+\[
+H_\delta = \left( \frac{\frac{1}{N} \sum_{i=1}^N s_i}{\left( \prod_{i=1}^N s_i \right)^{\frac{1}{N}}} \right)^\delta
+\]
+Simplifying, we get:
+\[
+H_\delta = \left( \frac{1}{N} \sum_{i=1}^N s_i \right)^\delta \cdot \left( \left( \prod_{i=1}^N s_i \right)^{-\frac{1}{N}} \right)^\delta
+\]
+Further simplifying:
+\[
+H_\delta = \left( \frac{1}{N} \sum_{i=1}^N s_i \right)^\delta \cdot \left( \prod_{i=1}^N s_i \right)^{-\frac{\delta}{N}}
+\]
+
+\subsection{Behavior at Extremes of \(\delta\)}
+
+For \(\delta = 1\):
+\[
+H_\delta = \frac{\text{AM}}{\text{GM}} = H_-
+\]
+For \(\delta = -1\):
+\[
+H_\delta = \frac{\text{GM}}{\text{AM}} = H_+
+\]
+For \( \delta = 0 \):
+\[
+H_\delta = 1
+\]
+For \(0 < \delta < 1\), the Hamiltonian favors a more egalitarian distribution, but not perfectly uniform. For \(-1 < \delta < 0\), the Hamiltonian favors a more totalitarian distribution, but not perfectly concentrated in one spin.
+
+\section{Transformation and Equivalence of Hamiltonians}
+
+In this section, we show the equivalence between the combined Hamiltonian \( H_{\delta_0} = (1 - \delta_0) H_+ + \delta_0 H_- \) and the new formulation \( H_{\delta_1} = \left( \frac{\text{AM}}{\text{GM}} \right)^\delta_1 \) under an appropriate transformation of \(\delta\).
+
+\subsection{Combined Hamiltonian}
+
+The combined Hamiltonian is defined as:
+\[
+H_{\delta_0} = (1 - \delta_0) H_+ + \delta_0 H_-
+\]
+where:
+\[
+H_+ = \sum_{i=1}^N \ln(s_i) + N \ln(N)
+\]
+\[
+H_- = -N \ln(N) - \sum_{i=1}^N \ln(s_i)
+\]
+Substituting \( H_+ \) and \( H_- \):
+\[
+H_{\delta_0} = (1 - \delta_0) \left( \sum_{i=1}^N \ln(s_i) + N \ln(N) \right) + \delta_0 \left( -N \ln(N) - \sum_{i=1}^N \ln(s_i) \right)
+\]
+Simplifying:
+\[
+H_{\delta_0} = (1 - 2\delta_0) \left( \sum_{i=1}^N \ln(s_i) + N \ln(N) \right)
+\]
+
+\subsection{Transformation and Equivalence}
+
+To show the equivalence, we apply the transformation \(\delta' = 1 - 2\delta\). Setting \(\delta' = 1 - 2\delta\):
+\[
+1 - 2\delta = \delta'
+\]
+Solving for \(\delta\):
+\[
+\delta = \frac{1 - \delta'}{2}
+\]
+Substituting \(\delta = \frac{1 - \delta'}{2}\) into the reformulated Hamiltonian:
+\[
+H = \left( \frac{1}{N} \sum_{i=1}^N s_i \right)^{\frac{1 - \delta'}{2}} \cdot \left( \left( \prod_{i=1}^N s_i \right)^{-\frac{1 - \delta'}{2N}} \right)
+\]
+Simplifying using exponent and logarithm relationship:
+\[
+H = e^{\frac{1 - \delta'}{2} \left( \ln\left( \frac{1}{N} \sum_{i=1}^N s_i \right) - \frac{1}{N} \sum_{i=1}^N \ln(s_i) \right)}
+\]
+\[
+H = e^{\frac{1 - \delta'}{2} \left( \ln\left( \frac{\text{AM}}{\text{GM}} \right) \right)}
+\]
+Final equivalence:
+\[
+H = \left( \frac{\text{AM}}{\text{GM}} \right)^{\frac{1 - \delta'}{2}}
+\]
+Thus, under the transformation \(\delta' = 1 - 2\delta\), the combined Hamiltonian \( H = (1 - \delta) H_+ + \delta H_- \) is equivalent to the new formulation \( H = \left( \frac{\text{AM}}{\text{GM}} \right)^\delta \).
+
+
+\subsection{Hamiltonian and Parameterization}
+
+The Hamiltonian is defined as:
+\[
+H = \left( \frac{\text{AM}}{\text{GM}} \right)^\delta
+\]
+where:
+\[
+\text{AM} = \frac{1}{N} \sum_{i=1}^N s_i
+\]
+\[
+\text{GM} = \left( \prod_{i=1}^N s_i \right)^{\frac{1}{N}}
+\]
+Taking the natural logarithm of \(H\):
+\[
+\ln H = \delta \ln \left( \frac{\text{AM}}{\text{GM}} \right)
+\]
+Expressing \(\ln \left( \frac{\text{AM}}{\text{GM}} \right)\):
+\[
+\ln \left( \frac{\text{AM}}{\text{GM}} \right) = \ln \left( \frac{1}{N} \sum_{i=1}^N s_i \right) - \frac{1}{N} \sum_{i=1}^N \ln s_i
+\]
+Thus:
+\[
+\ln H = \delta \left( \ln \left( \frac{1}{N} \sum_{i=1}^N s_i \right) - \frac{1}{N} \sum_{i=1}^N \ln s_i \right)
+\]
+
+\section{Entropy in Terms of \(\delta\) in the Microcanonical Ensemble}
+
+In this section, we derive an expression for the entropy \(S\) in terms of the parameter \(\delta\) under the assumptions of the microcanonical ensemble, where the total energy \(E\) is fixed.
+
+\subsection{Hamiltonian and Spin Distribution}
+
+The Hamiltonian is given by:
+\[
+H = \left( \frac{\text{AM}}{\text{GM}} \right)^\delta
+\]
+where the arithmetic mean (AM) and geometric mean (GM) are defined as:
+\[
+\text{AM} = \frac{1}{N} \sum_{i=1}^N s_i
+\]
+\[
+\text{GM} = \left( \prod_{i=1}^N s_i \right)^{\frac{1}{N}}
+\]
+Given the fixed total energy \(E\):
+\[
+\sum_{i=1}^N s_i = E
+\]
+\subsection{Entropy and Probability Distribution}
+The entropy \(S\) for a set of spins \(\{s_i\}\) is:
+\[
+S = -\sum_{i=1}^N p_i \ln p_i
+\]
+where \(p_i = \frac{s_i}{\sum_{j=1}^N s_j} = \frac{s_i}{E}\). Thus, the entropy becomes:
+\[
+S = -\sum_{i=1}^N \frac{s_i}{E} \ln \left( \frac{s_i}{E} \right)
+\]
+\subsection{Entropy in Terms of \(\delta\)}
+First, express \(H\) in terms of \(s_i\):
+\[
+H = \left( \frac{\frac{E}{N}}{\left( \prod_{i=1}^N s_i \right)^{\frac{1}{N}}} \right)^\delta = \left( \frac{E}{N \cdot \text{GM}} \right)^\delta
+\]
+Taking the logarithm of \(H\):
+\[
+\ln H = \delta \left( \ln \frac{E}{N} - \ln \text{GM} \right)
+\]
+Recall that:
+\[
+\ln \text{GM} = \frac{1}{N} \sum_{i=1}^N \ln s_i
+\]
+So:
+\[
+\ln H = \delta \left( \ln \frac{E}{N} - \frac{1}{N} \sum_{i=1}^N \ln s_i \right)
+\]
+The entropy \(S\) is:
+\[
+S = -\sum_{i=1}^N \frac{s_i}{E} \ln s_i + \ln E
+\]
+Given:
+\[
+\ln H = \delta \left( \ln \frac{E}{N} - \frac{1}{N} \sum_{i=1}^N \ln s_i \right)
+\]
+We rearrange terms to express \(\ln s_i\) in terms of \(\delta\):
+\[
+-\frac{1}{N} \sum_{i=1}^N \ln s_i = \frac{\ln E}{N} - \frac{\ln N}{N} - \frac{\ln H}{\delta}
+\]
+Thus:
+\[
+S = -\sum_{i=1}^N \frac{s_i}{E} \ln s_i + \ln E = \delta \ln \frac{E}{N} + \ln E = \delta \ln N + \ln E
+\]
+In summary:
+\[
+S = (1 + \delta) \ln E - \delta \ln N
+\]
+
+\subsection{Summary}
+
+Under the assumptions of the microcanonical ensemble with fixed total energy \(E\), the entropy \(S\) in terms of \(\delta\) is given by:
+\[
+S(\delta) = (1 + \delta) \ln E - \delta \ln N
+\]
+This expression reflects how the parameter \(\delta\) influences the entropy, interpolating between minimal entropy (concentrated distribution) and maximal entropy (uniform distribution).
+
+\section{Entropy Maximization in Microcanonical and Canonical Ensembles}
+
+In this section, we derive the relationship between entropy \(S\), the Hamiltonian \(H\), and the parameter \(\delta\) in both the microcanonical and canonical ensembles. We show that entropy is maximized when \(\delta = 1\) in the microcanonical ensemble and when \(\delta = -1\) in the canonical ensemble.
+
+\subsection{Microcanonical Ensemble (Fixed Total Energy)}
+
+In the microcanonical ensemble, the total energy \(E\) is fixed.
+
+\subsubsection{Hamiltonian}
+
+The Hamiltonian is given by:
+\[
+H = \left( \frac{\text{AM}}{\text{GM}} \right)^\delta
+\]
+where:
+\[
+\text{AM} = \frac{1}{N} \sum_{i=1}^N s_i = \frac{E}{N}
+\]
+\[
+\text{GM} = \left( \prod_{i=1}^N s_i \right)^{\frac{1}{N}}
+\]
+
+\subsubsection{Entropy in Terms of Spin Distribution}
+
+The entropy \(S\) for a set of spins \(\{s_i\}\) is given by:
+\[
+S = -\sum_{i=1}^N p_i \ln p_i
+\]
+Since \( p_i = \frac{s_i}{E} \), we have:
+\[
+S = -\sum_{i=1}^N \frac{s_i}{E} \ln \left( \frac{s_i}{E} \right) = -\sum_{i=1}^N \frac{s_i}{E} (\ln s_i - \ln E)
+\]
+\[
+S = -\sum_{i=1}^N \frac{s_i}{E} \ln s_i + \ln E
+\]
+
+\subsubsection{Relate Entropy to \(\delta\)}
+
+Given:
+\[
+\ln H = \delta \left( \ln \frac{E}{N} - \ln \text{GM} \right)
+\]
+where:
+\[
+\ln \text{GM} = \frac{1}{N} \sum_{i=1}^N \ln s_i
+\]
+
+Thus:
+\[
+\ln H = \delta \left( \ln \frac{E}{N} - \frac{1}{N} \sum_{i=1}^N \ln s_i \right)
+\]
+
+Using the expression for entropy:
+\[
+S = -\sum_{i=1}^N \frac{s_i}{E} \ln s_i + \ln E
+\]
+
+Isolate the \(\ln s_i\) term:
+\[
+-\frac{1}{N} \sum_{i=1}^N \ln s_i = \frac{\ln E}{N} - \frac{\ln N}{N} - \frac{\ln H}{\delta}
+\]
+
+Rewriting entropy \(S\) in terms of \(\delta\):
+\[
+S = -\sum_{i=1}^N \frac{s_i}{E} \ln s_i + \ln E = \delta \ln \frac{E}{N} + \ln E = (1 + \delta) \ln E - \delta \ln N
+\]
+
+Thus, in the microcanonical ensemble:
+\[
+S(\delta) = (1 + \delta) \ln E - \delta \ln N
+\]
+
+\subsubsection{Maximizing Entropy}
+
+1. **For \(\delta = 1\)**:
+   \[
+   S(1) = 2 \ln E - \ln N
+   \]
+   Entropy is maximized.
+
+2. **For \(\delta = 0\)**:
+   \[
+   S(0) = \ln E
+   \]
+
+3. **For \(\delta = -1\)**:
+   \[
+   S(-1) = 0
+   \]
+
+\textbf{Conclusion:} In the microcanonical ensemble with fixed total energy, entropy is maximized when \(\delta = 1\), corresponding to a uniform distribution of resources.
+
+\subsection{Canonical Ensemble (Unbounded Energy)}
+
+In the canonical ensemble, the energy is not fixed but can fluctuate, characterized by a temperature parameter \(T\).
+
+\subsubsection{Partition Function}
+
+The partition function \(Z\) is given by:
+\[
+Z = \sum_i e^{-\beta E_i}
+\]
+where \(\beta = \frac{1}{k_B T}\).
+
+\subsubsection{Average Energy}
+
+The average energy \(\langle E \rangle\) is the expected value of the energy, given by:
+\[
+\langle E \rangle = \sum_i E_i \frac{e^{-\beta E_i}}{Z} = -\frac{\partial \ln Z}{\partial \beta}
+\]
+
+\subsubsection{Entropy}
+
+The entropy \(S\) in the canonical ensemble is given by:
+\[
+S = k_B \left( \ln Z + \beta \langle E \rangle \right)
+\]
+
+This expression for entropy is derived from the thermodynamic potential for the canonical ensemble, known as the Helmholtz free energy \(F\):
+\[
+F = \langle E \rangle - TS
+\]
+Rearranging for \(S\):
+\[
+S = \frac{\langle E \rangle - F}{T}
+\]
+Using \(F = -k_B T \ln Z\), we get:
+\[
+S = \frac{\langle E \rangle + k_B T \ln Z}{T} = k_B \left( \ln Z + \beta \langle E \rangle \right)
+\]
+
+\subsubsection{Hamiltonian in Terms of \(\delta\)}
+
+For the system with the Hamiltonian given by:
+\[
+H = \left( \frac{\text{AM}}{\text{GM}} \right)^\delta
+\]
+where:
+\[
+\text{AM} = \frac{1}{N} \sum_{i=1}^N E_i = \frac{\langle E \rangle}{N}
+\]
+\[
+\text{GM} = \left( \prod_{i=1}^N E_i \right)^{\frac{1}{N}}
+\]
+
+The Hamiltonian can be rewritten as:
+\[
+H = \left( \frac{\frac{\langle E \rangle}{N}}{\left( \prod_{i=1}^N E_i \right)^{\frac{1}{N}}} \right)^\delta = \left( \frac{\langle E \rangle}{\left( \prod_{i=1}^N E_i \right)^{\frac{1}{N}}} \right)^\delta
+\]
+
+Taking the natural logarithm:
+\[
+\ln H = \delta \left( \ln \langle E \rangle - \frac{1}{N} \sum_{i=1}^N \ln E_i \right)
+\]
+
+\subsubsection{Connecting Entropy to \(\delta\)}
+
+To understand why \(\delta = -1\) maximizes the entropy in the canonical ensemble, consider the following:
+
+\begin{itemize}
+    \item The Boltzmann distribution maximizes entropy subject to the constraint of fixed average energy \(\langle E \rangle\). This distribution is characterized by an exponential decay of probabilities with energy, reflecting a concentrated distribution.
+    \item When \(\delta = -1\), the Hamiltonian becomes:
+    \[
+    H = \left( \frac{\text{GM}}{\text{AM}} \right) = \left( \frac{\left( \prod_{i=1}^N E_i \right)^{\frac{1}{N}}}{\frac{1}{N} \sum_{i=1}^N E_i} \right)
+    \]
+    This form emphasizes the geometric mean over the arithmetic mean, favoring a distribution where energies are more sharply peaked, aligning with the Boltzmann distribution.
+\end{itemize}
+
+\subsubsection{Maximizing Entropy}
+
+The entropy \(S\) in the canonical ensemble can be expressed in terms of the distribution of \(E_i\):
+\[
+S = -k_B \sum_i p_i \ln p_i
+\]
+where \(p_i = \frac{e^{-\beta E_i}}{Z}\). For \(\delta = -1\), the distribution of \(E_i\) reflects the natural exponential distribution, which maximizes entropy in the canonical ensemble.
+
+\subsubsection{Conclusion}
+
+For the canonical ensemble, the entropy \(S\) is maximized when \(\delta = -1\), as this configuration leads to the Boltzmann distribution. The Boltzmann distribution is the one that maximizes the entropy for a given average energy \(\langle E \rangle\). This reflects a concentrated distribution of energies, emphasizing the geometric mean over the arithmetic mean, which is characteristic of the canonical ensemble with unbounded energy.
+
+
+\end{document}
