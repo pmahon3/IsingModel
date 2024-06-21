@@ -5,8 +5,9 @@
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{geometry}
-\geometry{a4paper, margin=1in}
 \usepackage{natbib}
+\usepackage{lineno}
+\geometry{a4paper, margin=1in}
 
 
 \title{Symmetric Hamiltonians, Energy Distribution, and Information Efficiency}
@@ -15,6 +16,7 @@
 
 \begin{document}
 \maketitle
+\linenumbers
 
 \begin{abstract}
 This document explores the properties of symmetric Hamiltonians with zero-centered average energy, comparing their behavior in the canonical and microcanonical ensembles. We discuss how these systems maximize entropy and minimize free energy, leading to efficient energy and information distributions. Additionally, we analyze the distribution of spin values and the Gini coefficient, providing insights into the uniformity of spin distributions as the system approaches thermal equilibrium. Connections to ecological systems and species richness are also discussed, highlighting the broader applicability of these concepts.
@@ -35,49 +37,100 @@ where \( \bar{s} = \frac{1}{N} \sum_i s_i \) is the average spin, and \( s_i \) 
 This symmetry implies that the energy distribution is centered around zero.
 
 \subsection{Symmetry Properties}
-The Hamiltonian exhibits several key symmetries:
+The Hamiltonian exhibits several key symmetries,
 \begin{itemize}
     \item \textbf{Translation Symmetry in Spin Space}: The Hamiltonian is invariant under a global shift of all spin values by a constant. Mathematically, if \( s_i \to s_i + c \) for all \( i \), then \( \bar{s} \to \bar{s} + c \), and \( s_i - \bar{s} \) remains unchanged.
     \item \textbf{Reflection Symmetry}: The Hamiltonian is symmetric under the reflection of spins around the mean value. If \( s_i - \bar{s} \to - (s_i - \bar{s}) \), the Hamiltonian remains the same.
     \item \textbf{Global Spin Flip Symmetry (Z2 Symmetry)}: For systems where spins can take values \(\pm 1\), the Hamiltonian is invariant under a global flip of all spins. If \( s_i \to -s_i \) for all \( i \), then \( \bar{s} \to -\bar{s} \), and \( s_i - \bar{s} \to - (s_i - \bar{s}) \).
 \end{itemize}
 
-\section{Comparison of Canonical and Microcanonical Ensembles}
-\subsection{Canonical Ensemble}
+\section{The Canonical Ensemble}
 In the canonical ensemble, the system is in thermal equilibrium with a heat bath at temperature \( T \). The probability of the system being in a particular microstate with energy \( E_i \) is given by the Boltzmann distribution:
 \begin{equation}
 P_i = \frac{e^{-\beta E_i}}{Z},
 \end{equation}
-where \( \beta = \frac{1}{k_B T} \) and \( Z \) is the partition function:
-\begin{equation}
-Z = \sum_i e^{-\beta E_i}.
-\end{equation}
-The distribution of energies in the canonical ensemble allows for fluctuations around an average energy, influenced by temperature and the coupling constant \( J \).
+where \( \beta = \frac{1}{k_B T} \) and \( Z \) is the partition function. The distribution of energies in the canonical ensemble allows for fluctuations around an average energy, influenced by temperature and the coupling constant \( J \).
 
-\subsection{Microcanonical Ensemble}
-In the microcanonical ensemble, the total energy \( E \) is strictly fixed. All accessible microstates have the same energy, and the probability distribution is uniform over these microstates:
-\begin{equation}
-S(E) = k_B \ln \Omega(E),
-\end{equation}
-where \( \Omega(E) \) is the number of accessible microstates at energy \( E \). The microcanonical ensemble imposes a hard constraint on the total energy, allowing no fluctuations.
+\subsection{Internal Energy \( U \)}
 
-\subsection{Differences Between Constraints}
-\begin{itemize}
-    \item \textbf{Soft Constraint} (Canonical Ensemble): The sum of deviations from the mean energy must balance out, but individual energies can fluctuate. This allows the system to explore a broader range of configurations.
-    \item \textbf{Hard Constraint} (Microcanonical Ensemble): The total energy is fixed, with no fluctuations allowed. This restricts the system to a specific set of configurations.
-\end{itemize}
+The internal energy \( U \) is the expectation value of the energy, which by symmetry of the Hamiltonian is 0,
+\begin{align}
+U &= \langle E \rangle = \frac{1}{Z} \sum_i E_i e^{-\beta E_i}\\
+&=0
+\end{align}
 
-\subsection{Energy Efficiency and Entropy Maximization}
+\subsection{Helmholtz Free Energy \( F \)}
 
-As the system approaches thermal equilibrium, the free energy \( F = U - TS \) is minimized. The minimization of free energy leads to a balanced distribution of energy deviations, ensuring efficient energy usage. The system maximizes entropy, which corresponds to the most probable distribution of states given the constraints.
+The Helmholtz free energy \( F \) is related to the partition function by:
+\begin{align}
+F &= U - k_b T \ln Z\\
+ &= -k_B T \ln Z
+\end{align}
 
-\subsection{Information Efficiency}
+\subsection{Entropy in the Canonical Ensemble}
 
-Entropy \( S \) measures the disorder or information content of the system. Maximizing entropy at equilibrium leads to efficient information encoding. The Shannon entropy, used in information theory, is given by:
-\begin{equation}
-S = -k_B \sum_i P_i \ln P_i.
-\end{equation}
-A system that maximizes entropy efficiently encodes information about its state.
+The entropy \( S \) quantifies the number of possible microstates \( \Omega \) consistent with the macroscopic properties of the system, and can be derived from the Helmholtz free energy using the relation,
+\begin{align}
+S &= -\left( \frac{\partial F}{\partial T} \right)_V\\
+\intertext{We differentiate \( F \) with respect to \( T \),}
+\frac{\partial F}{\partial T} &= -k_B \left( \ln Z + T \frac{\partial \ln Z}{\partial T} \right) \\
+\intertext{Next, we differentiate \( \ln Z \) with respect to \( T \),}
+\frac{\partial \ln Z}{\partial T} &= \frac{1}{Z} \frac{\partial Z}{\partial T} \\
+\intertext{Now, we differentiate \( Z \) with respect to \( T \),}
+Z &= \sum_i e^{-\beta E_i} \\
+\frac{\partial Z}{\partial T} &= \sum_i \frac{\partial}{\partial T} e^{-\beta E_i} \\
+&= \sum_i e^{-\beta E_i} \left( -E_i \frac{\partial \beta}{\partial T} \right) \\
+\intertext{Since \(\beta = \frac{1}{k_B T}\),}
+\frac{\partial \beta}{\partial T} &= -\frac{1}{k_B T^2} \\
+\intertext{Substituting \(\frac{\partial \beta}{\partial T}\) into \(\frac{\partial Z}{\partial T}\),}
+\frac{\partial Z}{\partial T} &= \sum_i e^{-\beta E_i} \left( -E_i \left( -\frac{1}{k_B T^2} \right) \right) \\
+&= \frac{1}{k_B T^2} \sum_i E_i e^{-\beta E_i} \\
+\intertext{Substituting \(\frac{\partial Z}{\partial T}\) back into \(\frac{\partial \ln Z}{\partial T}\),}
+\frac{\partial \ln Z}{\partial T} &= \frac{1}{Z} \cdot \frac{1}{k_B T^2} \sum_i E_i e^{-\beta E_i} \\
+&= \frac{1}{k_B T^2} \langle E \rangle \\
+\intertext{where \( \langle E \rangle = \frac{1}{Z} \sum_i E_i e^{-\beta E_i} \). Finally, substituting \( \frac{\partial \ln Z}{\partial T} \) back into \( \frac{\partial F}{\partial T} \),}
+\frac{\partial F}{\partial T} &= -k_B \left( \ln Z + T \cdot \frac{1}{k_B T^2} \langle E \rangle \right) \\
+&= -k_B \ln Z - \frac{\langle E \rangle}{T} \\
+\intertext{Giving the expression for entropy,}
+S &= -\left( \frac{\partial F}{\partial T} \right)_V \\
+&= k_B \ln Z + \frac{\langle E \rangle}{T}\\
+&=k_B \ln Z
+\end{align}
+
+\subsection{Relation to Gibbs Entropy Formula}
+
+From the canonical ensemble the probability of a configuration at a given energy is,
+\begin{align}
+P_i &= \frac{e^{-\beta E_i}}{Z}\\
+\intertext{Substituting \( P_i \) into the Gibbs entropy formula,}\\
+S &= -k_B \sum_i P_i \ln P_i\\
+\intertext{Simplify the expression,}\\
+S &= -k_B \sum_i \left( \frac{e^{-\beta E_i}}{Z} \right) \ln \left( \frac{e^{-\beta E_i}}{Z} \right) \\
+  &= -k_B \sum_i \left( \frac{e^{-\beta E_i}}{Z} \right) \left( -\beta E_i - \ln Z \right) \\
+  &= k_B \sum_i \left( \frac{e^{-\beta E_i}}{Z} \right) \left( \beta E_i + \ln Z \right)\\
+\intertext{Separate the terms,}
+S &= k_B \beta \sum_i \left( \frac{E_i e^{-\beta E_i}}{Z} \right) + k_B \ln Z \sum_i \left( \frac{e^{-\beta E_i}}{Z} \right) \\
+  &= k_B \beta \langle E \rangle + k_B \ln Z\\
+\intertext{Given that \(\beta = \frac{1}{k_B T}\),}\\
+S &= \frac{\langle E \rangle}{T} + k_B \ln Z\\
+\intertext{and for \( \langle E\rangle\) = 0,}
+S &= k_b \ln Z
+\end{align}
+This derivation shows the relation to the Gibbs entropy formula for the canonical ensemble, and for a symmetric Hamiltonian with zero-centered average energy the entropy depends solely on the partition function \( Z \).
+
+Only in the infinite limit of the number of lattice sites, \(N\), does \(\langle E\rangle =0\). For a finite lattice the average energy is fluctuates about 0.
+
+\subsection{Entropy for Finite Lattice Size with \(\langle E \rangle = 0\)}
+
+For a finite lattice size, the average energy \(\langle E \rangle\) is not exactly zero, and there are energy fluctuations. We define \(\delta E\) as the standard deviation of the energy,
+\begin{align}
+\sigma_E^2 &= \delta E = \sqrt{\langle E^2 \rangle - \langle E \rangle^2}.
+\intertext{Substituting \(\delta E\) into the entropy expression, we have,}
+S &= k_B \ln Z + \frac{\delta E}{T}\\
+\intertext{Therefore, the entropy for a finite lattice size, including energy fluctuations, is,}
+S &= k_B \ln Z + \frac{1}{T} \sqrt{\langle E^2 \rangle - \langle E \rangle^2}\\
+S &= k_B \ln Z + \frac{\sigma_E^2}{T}
+\end{align}
 
 \subsection{Distribution of Spin Values and the Gini Coefficient}
 
